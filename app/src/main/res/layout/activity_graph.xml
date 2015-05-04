@@ -1,0 +1,167 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="#0099cc"
+    tools:context=".FullscreenActivity"
+    android:id="@+id/graphActivityFrame">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="25px"
+            android:layout_gravity="center" />
+
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:id="@+id/graph"
+        android:paddingTop="32dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="50px"
+            android:layout_gravity="center" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/changeTimeSpanText"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="Select time span"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="100px">
+
+            <Button
+                android:text="SHOW TODAY"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/showDayButton"
+                android:background="@drawable/house"
+                android:onClick="showTodayClicked"
+                android:layout_gravity="left|center_vertical" />
+            <Button
+                android:text="SHOW WEEK"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/showWeekButton"
+                android:background="@drawable/house"
+                android:onClick="showWeekClicked"
+                android:layout_gravity="left|center_vertical" />
+            <Button
+                android:text="SHOW MONTH"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/showMonthButton"
+                android:background="@drawable/house"
+                android:onClick="showMonthClicked"
+                android:layout_gravity="left|center_vertical" />
+            <Button
+                android:text="CALENDAR"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/showYearButton"
+                android:background="@drawable/house"
+                android:onClick="showCalendarClicked"
+                android:layout_gravity="left|center_vertical" />
+            </LinearLayout>
+
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="50px"
+            android:layout_gravity="center" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/changeResText"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="Select resolution"/>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="100px">
+
+            <Button
+                android:text="MONTH"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/setMonthResButton"
+                android:background="@drawable/house"
+                android:onClick="showTodayClicked"
+                android:layout_gravity="left|center_vertical" />
+            <Button
+                android:text="DAY"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/setDayResButton"
+                android:background="@drawable/house"
+                android:onClick="showWeekClicked"
+                android:layout_gravity="left|center_vertical" />
+            <Button
+                android:text="HOUR"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/showHourResButton"
+                android:background="@drawable/house"
+                android:onClick="showMonthClicked"
+                android:layout_gravity="left|center_vertical" />
+            <Button
+                android:text="MINUTE"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/setMinuteResButton"
+                android:background="@drawable/house"
+                android:onClick="showMonthClicked"
+                android:layout_gravity="left|center_vertical" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="50px"
+            android:layout_gravity="center" />
+
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/blablaText"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:text="Some information about bla bla bla ..."/>
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center" />
+
+
+
+    </FrameLayout>
+
+
+</FrameLayout>
