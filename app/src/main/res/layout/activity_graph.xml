@@ -42,35 +42,43 @@
             android:layout_height="100px">
 
             <Button
-                android:text="SHOW TODAY"
-                android:layout_width="100dp"
+                android:text="TODAY"
+                android:layout_width="75dp"
                 android:layout_height="50dp"
+                android:background="#0088bb"
                 android:id="@+id/showDayButton"
-                android:background="@drawable/house"
                 android:onClick="showTodayClicked"
                 android:layout_gravity="left|center_vertical" />
             <Button
-                android:text="SHOW WEEK"
-                android:layout_width="100dp"
+                android:text="WEEK"
+                android:layout_width="75dp"
                 android:layout_height="50dp"
+                android:background="#0088bb"
                 android:id="@+id/showWeekButton"
-                android:background="@drawable/house"
                 android:onClick="showWeekClicked"
                 android:layout_gravity="left|center_vertical" />
             <Button
-                android:text="SHOW MONTH"
-                android:layout_width="100dp"
+                android:text="MONTH"
+                android:layout_width="75dp"
                 android:layout_height="50dp"
+                android:background="#0088bb"
                 android:id="@+id/showMonthButton"
-                android:background="@drawable/house"
                 android:onClick="showMonthClicked"
                 android:layout_gravity="left|center_vertical" />
             <Button
-                android:text="CALENDAR"
-                android:layout_width="100dp"
+                android:text="YEAR"
+                android:layout_width="75dp"
                 android:layout_height="50dp"
+                android:background="#0088bb"
                 android:id="@+id/showYearButton"
-                android:background="@drawable/house"
+                android:onClick="showYearClicked"
+                android:layout_gravity="left|center_vertical" />
+            <Button
+                android:text="CALENDAR"
+                android:layout_width="75dp"
+                android:layout_height="50dp"
+                android:background="#0088bb"
+                android:id="@+id/showCalendarButton"
                 android:onClick="showCalendarClicked"
                 android:layout_gravity="left|center_vertical" />
             </LinearLayout>
@@ -97,35 +105,35 @@
 
             <Button
                 android:text="MONTH"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="50dp"
                 android:id="@+id/setMonthResButton"
-                android:background="@drawable/house"
-                android:onClick="showTodayClicked"
+                android:background="#0088bb"
+                android:onClick="setMonthResClicked"
                 android:layout_gravity="left|center_vertical" />
             <Button
                 android:text="DAY"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="50dp"
                 android:id="@+id/setDayResButton"
-                android:background="@drawable/house"
-                android:onClick="showWeekClicked"
+                android:background="#0088bb"
+                android:onClick="setDayResClicked"
                 android:layout_gravity="left|center_vertical" />
             <Button
                 android:text="HOUR"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="50dp"
                 android:id="@+id/showHourResButton"
-                android:background="@drawable/house"
-                android:onClick="showMonthClicked"
+                android:background="#0088bb"
+                android:onClick="setHourResClicked"
                 android:layout_gravity="left|center_vertical" />
             <Button
                 android:text="MINUTE"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="50dp"
                 android:id="@+id/setMinuteResButton"
-                android:background="@drawable/house"
-                android:onClick="showMonthClicked"
+                android:background="#0088bb"
+                android:onClick="setMinuteResClicked"
                 android:layout_gravity="left|center_vertical" />
         </LinearLayout>
 

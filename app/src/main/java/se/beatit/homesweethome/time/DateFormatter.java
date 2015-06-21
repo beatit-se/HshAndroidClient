@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
  * Created by stefan on 2015-05-01.
  */
 public class DateFormatter {
-    private final static SimpleDateFormat restDateFormatter = new SimpleDateFormat("yyyyMMdd2400");
+    private final static SimpleDateFormat restDateFormatter = new SimpleDateFormat("yyyyMMdd0000");
     private final static SimpleDateFormat graphDateFormatter = new SimpleDateFormat("MMM d");
 
     private TimeSpan timeSpan;

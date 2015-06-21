@@ -100,7 +100,7 @@ public class CalendarActivity extends FragmentActivity {
     }
 
     public void showGraphButtonClicked(View view) {
-        TimeSpan timeSpan = new TimeSpan(fromDate, toDate, "d");
+        TimeSpan timeSpan = new TimeSpan(fromDate, toDate, "D");
         GraphActivityIntent graphActivityIntent = new GraphActivityIntent(this, timeSpan);
         graphActivityIntent.startActivity();
     }

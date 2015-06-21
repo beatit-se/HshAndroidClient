@@ -12,11 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.StaticLabelsFormatter;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
 
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 
 import se.beatit.homesweethome.intent.GraphActivityIntent;
 import se.beatit.homesweethome.io.restclient.History;
@@ -24,12 +22,13 @@ import se.beatit.homesweethome.io.restclient.IotHomeRestRoot;
 import se.beatit.homesweethome.io.restclient.RetrofitRestClient;
 import se.beatit.homesweethome.time.DateFormatter;
 import se.beatit.homesweethome.time.TimeSpan;
+import se.beatit.homesweethome.ui.Graph;
 
 
 public class GraphActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<History> {
 
     private TimeSpan timeSpan;
-    private GraphView theGraph;
+    private Graph theGraph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,41 +36,31 @@ public class GraphActivity extends ActionBarActivity implements LoaderManager.Lo
         setContentView(R.layout.activity_graph);
         showProgressBar();
 
-        theGraph = (GraphView)findViewById(R.id.graph);
-
-        Intent intent = getIntent();
-        GraphActivityIntent graphActivityIntent = new GraphActivityIntent(intent);
+        theGraph = new Graph((GraphView)findViewById(R.id.graph));
+        GraphActivityIntent graphActivityIntent = new GraphActivityIntent(getIntent());
 
         if(graphActivityIntent.hasTimeSpan()) {
             timeSpan = graphActivityIntent.getTimeSpan();
         } else {
             timeSpan = new TimeSpan(-7,0,TimeSpan.RES_DAY);
         }
+
         getLoaderManager().initLoader(0, null, this).forceLoad();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_graph, menu);
-
-        // Retrieve the share menu item
-        //MenuItem actionItem = menu.findItem(R.id.action_settings);
-
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_change_time_span) {
-            selectDatesPressed(null);
+            showCalendarClicked(null);
             return true;
         }
         return false;
-    }
-
-    public void selectDatesPressed(View view) {
-        Intent intent = new Intent(this, CalendarActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -97,40 +86,9 @@ public class GraphActivity extends ActionBarActivity implements LoaderManager.Lo
 
     @Override
     public void onLoadFinished(Loader loader, History history) {
-        System.out.println("On finished loader");
+        System.out.println("Loader done, updating graph");
 
-        List<Long> electricityUseHistory = history.getElectricityuse();
-        DataPoint[] points = new DataPoint[electricityUseHistory.size()];
-        int i = 0;
-
-        for (Long usage : electricityUseHistory) {
-            points[i] = new DataPoint(i, usage);
-            i++;
-        }
-
-//LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(points);
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(points);
-        series.setSpacing(30);
-
-        theGraph.getViewport().setYAxisBoundsManual(true);
-        theGraph.getViewport().setXAxisBoundsManual(true);
-        theGraph.getViewport().setMaxX(electricityUseHistory.size());
-        theGraph.getViewport().setMinX(-1);
-        theGraph.getViewport().setMaxY(series.getHighestValueY()+(series.getHighestValueY()*0.1));
-        theGraph.getViewport().setMinY(0);
-
-
-        DateFormatter df = new DateFormatter(timeSpan);
-
-        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(theGraph);
-        staticLabelsFormatter.setHorizontalLabels(
-                new String[]{df.getDisplayableFrom(), df.getDisplayableTo()});
-        //staticLabelsFormatter.setVerticalLabels(new String[] {"low", "middle", "high"});
-        theGraph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-
-        theGraph.removeAllSeries();
-        theGraph.addSeries(series);
-
+        theGraph.updateGraph(timeSpan, history);
         hideProgressBar();
         theGraph.invalidate();
     }
@@ -141,18 +99,58 @@ public class GraphActivity extends ActionBarActivity implements LoaderManager.Lo
     }
 
     public void showTodayClicked(View view) {
-        updateGraphWithNewTimespan(new TimeSpan(-1, 0, TimeSpan.RES_HOUR));
+        findViewById(R.id.showDayButton).setBackgroundColor(getResources().getColor(R.color.color_button_selected));
+        updateGraphWithNewTimeSpan(new TimeSpan(0, 1, TimeSpan.RES_HOUR));
     }
 
     public void showWeekClicked(View view) {
-        updateGraphWithNewTimespan(new TimeSpan(-7, 0, TimeSpan.RES_DAY));
+        updateGraphWithNewTimeSpan(new TimeSpan(-6, 1, TimeSpan.RES_DAY));
     }
 
     public void showMonthClicked(View view) {
-        updateGraphWithNewTimespan(new TimeSpan(-31, 0, TimeSpan.RES_DAY));
+        Calendar calFrom = Calendar.getInstance();
+        calFrom.set(Calendar.DAY_OF_MONTH, 1);
+        Date to = new Date();
+
+        updateGraphWithNewTimeSpan(new TimeSpan(calFrom.getTime(), to, TimeSpan.RES_DAY));
+
     }
 
-    public void updateGraphWithNewTimespan(TimeSpan ts) {
+    public void showYearClicked(View view) {
+        Calendar calFrom = Calendar.getInstance();
+        calFrom.set(Calendar.MONTH, Calendar.JANUARY);
+        calFrom.set(Calendar.DAY_OF_MONTH, 1);
+        Date to = new Date();
+
+        updateGraphWithNewTimeSpan(new TimeSpan(calFrom.getTime(), to, TimeSpan.RES_MONTH));
+    }
+
+    public void showCalendarClicked(View view) {
+        Intent intent = new Intent(this, CalendarActivity.class);
+        startActivity(intent);
+    }
+
+    public void setMonthResClicked(View view) {
+        timeSpan.setResolution(TimeSpan.RES_MONTH);
+        updateGraphWithNewTimeSpan(timeSpan);
+    }
+
+    public void setDayResClicked(View view) {
+        timeSpan.setResolution(TimeSpan.RES_DAY);
+        updateGraphWithNewTimeSpan(timeSpan);
+    }
+
+    public void setHourResClicked(View view) {
+        timeSpan.setResolution(TimeSpan.RES_HOUR);
+        updateGraphWithNewTimeSpan(timeSpan);
+    }
+
+    public void setMinuteResClicked(View view) {
+        timeSpan.setResolution(TimeSpan.RES_MINUTE);
+        updateGraphWithNewTimeSpan(timeSpan);
+    }
+
+    private void updateGraphWithNewTimeSpan(TimeSpan ts) {
         GraphActivityIntent graphActivityIntent = new GraphActivityIntent(this, ts);
         graphActivityIntent.startActivity();
     }
