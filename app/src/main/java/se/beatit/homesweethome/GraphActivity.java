@@ -100,11 +100,11 @@ public class GraphActivity extends ActionBarActivity implements LoaderManager.Lo
 
     public void showTodayClicked(View view) {
         findViewById(R.id.showDayButton).setBackgroundColor(getResources().getColor(R.color.color_button_selected));
-        updateGraphWithNewTimeSpan(new TimeSpan(0, 1, TimeSpan.RES_HOUR));
+        updateGraphWithNewTimeSpan(new TimeSpan(0, 0, TimeSpan.RES_HOUR));
     }
 
     public void showWeekClicked(View view) {
-        updateGraphWithNewTimeSpan(new TimeSpan(-6, 1, TimeSpan.RES_DAY));
+        updateGraphWithNewTimeSpan(new TimeSpan(-6, 0, TimeSpan.RES_DAY));
     }
 
     public void showMonthClicked(View view) {

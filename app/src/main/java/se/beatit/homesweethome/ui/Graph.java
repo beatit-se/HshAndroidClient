@@ -1,6 +1,9 @@
 package se.beatit.homesweethome.ui;
 
+import android.graphics.Color;
+
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
@@ -23,7 +26,7 @@ public class Graph {
     }
 
     public void updateGraph(TimeSpan timeSpan, History history) {
-        List<Long> electricityUseHistory = history.getElectricityuse();
+        final List<Long> electricityUseHistory = history.getElectricityuse();
         DataPoint[] points = new DataPoint[electricityUseHistory.size()];
         int i = 0;
 
@@ -36,13 +39,24 @@ public class Graph {
         BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(points);
         series.setSpacing(30);
 
+        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+            @Override
+            public int get(DataPoint dataPoint) {
+
+                if(dataPoint.getX() == electricityUseHistory.size()-1) {
+                    return Color.GREEN;
+                } else {
+                    return Color.RED;
+                }
+            }
+        });
+
         graphView.getViewport().setYAxisBoundsManual(true);
         graphView.getViewport().setXAxisBoundsManual(true);
         graphView.getViewport().setMaxX(electricityUseHistory.size());
         graphView.getViewport().setMinX(-1);
         graphView.getViewport().setMaxY(series.getHighestValueY()+(series.getHighestValueY()*0.1));
         graphView.getViewport().setMinY(0);
-
 
         DateFormatter df = new DateFormatter(timeSpan);
 

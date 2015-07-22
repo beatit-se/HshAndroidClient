@@ -27,7 +27,7 @@ public class TimeSpan implements Serializable {
         fromDate = cal.getTime();
 
         cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, stopDateFromNow);
+        cal.add(Calendar.DATE, stopDateFromNow+1);
         toDate = cal.getTime();
 
         this.resolution = resolution;
@@ -35,7 +35,13 @@ public class TimeSpan implements Serializable {
 
     public TimeSpan(Date fromDate, Date toDate, String resolution) {
         this.fromDate = fromDate;
-        this.toDate = toDate;
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(toDate);
+        cal.add(Calendar.DATE, 1);
+
+        this.toDate = cal.getTime();
+
         this.resolution = resolution;
     }
 
